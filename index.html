@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Resume</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Raleway:wght@400;700&display=swap" rel="stylesheet">
+    
+</head>
+<body>
+    <div class="container">
+        <h1>𝔉𝔞𝔮𝔢𝔥𝔞 𝔑𝔬𝔬𝔯</h1>
+
+        <header>
+            <h2>𝓔𝓭𝓾𝓬𝓪𝓽𝓲𝓸𝓷</h2>
+            <ul id="educationList">
+                <li>9th Currently in Snfc</li>
+                <li>6 months in Giaic</li>
+            </ul>
+        </header>  
+
+        <header>
+            <h2>Skills</h2>
+            <ul id="skillsList">
+                <li>𝓗𝓽𝓶𝓵</li>
+                <li>𝓒𝓢𝓢</li>
+                <li>𝓙𝓪𝓿𝓪𝓼𝓬𝓻𝓲𝓹𝓽</li>
+                <li>𝓣𝔶𝓹𝓮𝓼𝓬𝓻𝓲𝓹𝓽</li>
+            </ul>
+        </header>
+
+        <header>
+            <h2>Projects</h2>
+            <ul>
+                <li>Personal Portfolio</li>
+                <li>Countdown Timer</li>
+                <li>Weather App</li>
+                <li>Todo List</li>
+                <li>Next.js Startup</li>
+            </ul>
+        </header>
+
+        <h2>Enter Your Skills</h2>
+        <div>
+            <input type="text" id="skillInput" placeholder="Enter a skill">
+            <button class="add-button" onclick="addSkill()">Add Skill</button>
+        </div>
+
+        <h2>Enter Your Education</h2>
+        <div>
+            <input type="text" id="educationInput" placeholder="Enter your education">
+            <button class="add-button" onclick="addEducation()">Add Education</button>
+        </div>
+
+        <button class="add-button" onclick="downloadResume()">Download Resume</button>
+    </div>
+
+    <script>
+        const skills = [];
+        const education = [];
+
+        function addSkill() {
+            const skillInput = document.getElementById('skillInput');
+            const skillsList = document.getElementById('skillsList');
+            const newSkill = skillInput.value.trim();
+            
+            if (newSkill) {
+                const newSkillItem = document.createElement('li');
+                newSkillItem.textContent = newSkill;
+                skillsList.appendChild(newSkillItem);
+                skills.push(newSkill);
+                skillInput.value = '';
+            } else {
+                alert("Please enter a skill.");
+            }
+        }
+
+        function addEducation() {
+            const educationInput = document.getElementById('educationInput');
+            const educationList = document.getElementById('educationList');
+            const newEducation = educationInput.value.trim();
+            
+            if (newEducation) {
+                const newEducationItem = document.createElement('li');
+                newEducationItem.textContent = newEducation;
+                educationList.appendChild(newEducationItem);
+                education.push(newEducation);
+                educationInput.value = '';
+            } else {
+                alert("Please enter your education.");
+            }
+        }
+
+        function downloadResume() {
+            const resumeContent = `
+                Resume for 𝔉𝔞𝔠𝔥𝔞 𝔑𝔬𝔬𝔯
+                ---------------------------------
+                Skills:
+                ${skills.length > 0 ? skills.join('\n') : 'No skills added.'}
+                
+                Education:
+                ${education.length > 0 ? education.join('\n') : 'No education added.'}
+                
+                Projects:
+                Personal Portfolio
+                Countdown Timer
+                Weather App
+                Todo List
+                Next.js Startup
+            `;
+
+            const blob = new Blob([resumeContent], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'resume.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+    </script>
+
+    <footer>
+        &copy; 2024 Your Name. All rights reserved.
+    </footer>
+</body>
+</html>
